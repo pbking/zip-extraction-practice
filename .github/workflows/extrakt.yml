@@ -21,7 +21,7 @@ jobs:
           
       - uses: montudor/action-zip@v1
         with:
-          args: unzip -qq adventurer.zip -d adventurer     
+          args: unzip -qq adventurer.zip  
           
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4
