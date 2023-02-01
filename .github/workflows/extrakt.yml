@@ -4,6 +4,8 @@ on:
   issues:
     types: [ "opened", "tagged", "edited" ]
 
+    workflow_dispatch:
+  
 jobs:
   extrakt:
     runs-on: ubuntu-latest
