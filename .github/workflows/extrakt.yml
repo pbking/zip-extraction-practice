@@ -26,7 +26,7 @@ jobs:
 
       - name: Do Stuff
         run: |
-          sudo chmod -R 766 ./adventurer
+          sudo chown -R $USER:$USER .
           sudo rm ./adventurer.zip
           sudo ls -lR
 
