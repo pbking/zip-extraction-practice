@@ -17,7 +17,7 @@ jobs:
           
       - name: Get Zip file
         run: |
-          wget https://github.com/pbking/zip-extraction-practice/files/10561056/adventurer.zip
+          wget https://github.com/pbking/zip-extraction-practice/files/10572864/adventurer.zip
           
       - uses: montudor/action-zip@v1
         with:
