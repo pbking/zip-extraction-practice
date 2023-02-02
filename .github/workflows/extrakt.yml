@@ -34,7 +34,7 @@ jobs:
         uses: peter-evans/create-pull-request@v4
         with:
           commit-message: Add adventurer to repo
-          committer: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+          committer: GitHub <noreply@github.com>
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
           signoff: false
           branch: add/adventurer
