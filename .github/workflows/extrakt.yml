@@ -26,4 +26,28 @@ jobs:
 
       - name: Do Stuff
         run: |
+          sudo -R chmod 766 ./adventurer
+          sudo rm ./adventurer.zip
           sudo ls -lR
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v4
+        with:
+          commit-message: Add adventurer to repo
+          committer: GitHub <noreply@github.com>
+          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+          signoff: false
+          branch: add/adventurer
+          delete-branch: true
+          title: '[Add Theme] Adventurer'
+          body: |
+            Add Adventurer Theme
+            - Excracted from zip
+          labels: |
+            add theme
+          assignees: pbking
+          reviewers: pbking
+          team-reviewers: |
+            owners
+            maintainers
+          draft: false
