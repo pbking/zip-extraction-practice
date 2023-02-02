@@ -26,4 +26,4 @@ jobs:
 
       - name: Do Stuff
         run: |
-          ls -lR
+          sudo ls -lR
