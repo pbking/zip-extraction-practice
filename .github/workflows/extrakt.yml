@@ -43,14 +43,13 @@ jobs:
       - name: Create Pull Request
         uses: repo-sync/pull-request@v2
         with:
-          destination_branch: "trunk"                      # If blank, default: master
+          destination_branch: "trunk"
           source_branch: "add/adventurer" 
-          pr_title: "Pulling ${{ github.ref }} into master" # Title of pull request
-          pr_body: |                                        # Full markdown support, requires pr_title to be set
-            :crown: *An automated PR*
+          pr_title: "Adding Theme: Adventurer" 
+          pr_body: |
+            *Adding Theme Adventurere*
 
-            _Created by [repo-sync/pull-request](https://github.com/repo-sync/pull-request)_
-          pr_reviewer: "pbking"                         # Comma-separated list (no spaces)
-          pr_assignee: "worker"                         # Comma-separated list (no spaces)
-          pr_label: "auto-pr"                               # Comma-separated list (no spaces)
-          pr_allow_empty: false                              # Creates pull request even if there are no changes
+            _Created by magic elves_
+          pr_reviewer: "pbking"
+          pr_assignees: "pbking"
+          pr_allow_empty: false
