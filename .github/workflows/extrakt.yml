@@ -31,8 +31,8 @@ jobs:
           sudo chown -R $USER:$USER .
           sudo rm ./adventurer.zip
           sudo ls -lR
-          git config user.name "GitHub Actions"
-          git config user.email noreply@github.com
+          git config user.name github-actions
+          git config user.email github-actions@github.com
           git config --global --add --bool push.autoSetupRemote true
           git checkout -b add/adventurer
           git add --all
