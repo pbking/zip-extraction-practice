@@ -31,15 +31,15 @@ jobs:
           sudo ls -lR
 
       - name: Create Pull Request
-      uses: repo-sync/pull-request@v2
-      with:
-        destination_branch: "trunk"                      # If blank, default: master
-        pr_title: "Pulling ${{ github.ref }} into master" # Title of pull request
-        pr_body: |                                        # Full markdown support, requires pr_title to be set
-          :crown: *An automated PR*
+        uses: repo-sync/pull-request@v2
+        with:
+          destination_branch: "trunk"                      # If blank, default: master
+          pr_title: "Pulling ${{ github.ref }} into master" # Title of pull request
+          pr_body: |                                        # Full markdown support, requires pr_title to be set
+            :crown: *An automated PR*
 
-          _Created by [repo-sync/pull-request](https://github.com/repo-sync/pull-request)_
-        pr_reviewer: "pbking"                         # Comma-separated list (no spaces)
-        pr_assignee: "worker"                         # Comma-separated list (no spaces)
-        pr_label: "auto-pr"                               # Comma-separated list (no spaces)
-        pr_allow_empty: false                              # Creates pull request even if there are no changes
+            _Created by [repo-sync/pull-request](https://github.com/repo-sync/pull-request)_
+          pr_reviewer: "pbking"                         # Comma-separated list (no spaces)
+          pr_assignee: "worker"                         # Comma-separated list (no spaces)
+          pr_label: "auto-pr"                               # Comma-separated list (no spaces)
+          pr_allow_empty: false                              # Creates pull request even if there are no changes
