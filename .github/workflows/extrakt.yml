@@ -29,6 +29,8 @@ jobs:
           sudo chown -R $USER:$USER .
           sudo rm ./adventurer.zip
           sudo ls -lR
+          git config user.name "GitHub Actions"
+          git config user.email noreply@github.com
           git checkout -b add/adventurer
           git add --all
           git commit -m "Adding adventurer"
