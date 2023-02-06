@@ -10,46 +10,7 @@ jobs:
   extrakt:
     runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-          
-      - name: Get Zip file
-        run: |
-          wget https://github.com/pbking/zip-extraction-practice/files/10572864/adventurer.zip
-          
-      - uses: montudor/action-zip@v1
-        with:
-          args:
-            unzip -qq ./adventurer.zip -d ./adventurer
-
       - name: Do Stuff
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          sudo chown -R $USER:$USER .
-          sudo rm ./adventurer.zip
-          sudo ls -lR
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git config --global --add --bool push.autoSetupRemote true
-          git checkout -b add/adventurer
-          git add --all
-          git commit -m "Adding adventurer"
-          git push origin add/adventurer
-          git status
-
-      - name: Create Pull Request
-        uses: repo-sync/pull-request@v2
-        with:
-          destination_branch: "trunk"
-          source_branch: "add/adventurer" 
-          pr_title: "Adding Theme: Adventurer" 
-          pr_body: |
-            *Adding Theme Adventurere*
-
-            _Created by magic elves_
-          pr_reviewer: "pbking"
-          pr_assignees: "pbking"
-          pr_allow_empty: false
+          echo ${{ github.event }}
+          echo ${{ github.event.issue }}
