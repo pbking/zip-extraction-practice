@@ -9,7 +9,7 @@ on:
 jobs:
   extrakt:
     runs-on: ubuntu-latest
-
+    steps:
       - name: Do Stuff
         run: |
           echo ${{ github.event }}
