@@ -13,6 +13,6 @@ jobs:
       - name: Do Stuff
         run: |
           echo '----'
-          echo '${{ toJSON(github.event.issue.body) }}'
+          echo '${{ github.event.issue.body }}'
           echo '----'
           echo '${{ fromJSON(github.event.issue.body) }}'
