@@ -12,5 +12,6 @@ jobs:
     steps:
       - name: Do Stuff
         run: |
-          echo ${{ fromJSON(github.event) }}
-          echo ${{ fromJSON(github.event.issue) }}
+          echo '${{ toJSON(github.event) }}'
+          echo '${{ toJSON(github.event.issue) }}''
+          echo '${{ toJSON(job) }}''
