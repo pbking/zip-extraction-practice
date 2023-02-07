@@ -22,4 +22,4 @@ jobs:
         env:
           zipfile: format('{filename}.zip', steps.regex-match.outputs.group1) 
         run: |
-          echo '${{ zipfile }}'
+          echo '$zipfile'
