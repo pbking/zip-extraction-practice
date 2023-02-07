@@ -37,8 +37,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git pull
-          git checkout -b add/${{ steps.match-theme-name.outputs.group1 }}
+          git checkout -B add/${{ steps.match-theme-name.outputs.group1 }}
 
       - name: Download Zip
         if: ${{ steps.match-url.outputs.group1 }}
