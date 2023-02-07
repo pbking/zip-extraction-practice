@@ -39,3 +39,17 @@ jobs:
         with:
           args:
             unzip -qq ./${{ steps.match-filename.outputs.group1 }} -d ./${{ steps.match-theme-name.outputs.group1 }}
+
+      - name: Open Pull Request
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          sudo chown -R $USER:$USER .
+          sudo rm ./${{ steps.match-filename.outputs.group1 }}
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git config --global --add --bool push.autoSetupRemote true
+          git checkout -b add/${{ steps.match-theme-name.outputs.group1 }}
+          git add --all
+          git commit -m "Adding Theme: [${{ steps.match-theme-name.outputs.group1 }}]"
+          git push origin add/${{ steps.match-theme-name.outputs.group1 }}
