@@ -12,8 +12,6 @@ jobs:
     steps:
 
       - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
 
       - uses: actions-ecosystem/action-regex-match@v2
         id: match-url
