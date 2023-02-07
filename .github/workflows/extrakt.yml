@@ -44,7 +44,7 @@ jobs:
           args:
             unzip -qq ./${{ steps.match-filename.outputs.group1 }} -d ./${{ steps.match-theme-name.outputs.group1 }}
 
-      - name: Open Pull Request
+      - name: Create Branch 
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -57,3 +57,17 @@ jobs:
           git add --all
           git commit -m "Adding Theme: [${{ steps.match-theme-name.outputs.group1 }}]"
           git push origin add/${{ steps.match-theme-name.outputs.group1 }}
+
+      - name: Create Pull Request
+        uses: repo-sync/pull-request@v2
+        with:
+          destination_branch: "trunk"
+          source_branch: "add/${{ steps.match-theme-name.outputs.group1 }}" 
+          pr_title: "Adding Theme: ${{ steps.match-theme-name.outputs.group1 }}" 
+          pr_body: |
+            *Adding Theme ${{ steps.match-theme-name.outputs.group1 }}*
+
+            Closes: #${{ github.event.issue.number }}
+
+            _Created auto-magically_
+          pr_reviewer: "pbking"
