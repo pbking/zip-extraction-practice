@@ -12,14 +12,14 @@ jobs:
     steps:
 
       - uses: actions-ecosystem/action-regex-match@v2
-        id: regex-match
+        id: match-zip
         with:
           text: ${{ github.event.issue.body }}
           regex: '\((.*?)\.zip\)'
+        env:
+          file: ${{ steps.regex-match.outputs.group1 }}
 
       - name: Do Stuff
-        if: ${{ steps.regex-match.outputs.group1 }}
-        env:
-          zipfile: format('{filename}.zip', steps.regex-match.outputs.group1) 
+        if: ${{ steps.match-zip.file }}
         run: |
-          echo '$zipfile'
+          echo '${{ steps.match-zip.file }}'
