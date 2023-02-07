@@ -15,7 +15,7 @@ jobs:
         id: match-zip
         with:
           text: ${{ github.event.issue.body }}
-          regex: '\((.*?)\.zip\)'
+          regex: '\((.*?\.zip)\)'
 
       - name: Do Stuff
         if: ${{ steps.match-zip.outputs.group1 }}
