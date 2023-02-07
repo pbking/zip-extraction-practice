@@ -12,12 +12,30 @@ jobs:
     steps:
 
       - uses: actions-ecosystem/action-regex-match@v2
-        id: match-zip
+        id: match-url
         with:
           text: ${{ github.event.issue.body }}
           regex: '\((.*?\.zip)\)'
 
-      - name: Do Stuff
-        if: ${{ steps.match-zip.outputs.group1 }}
+      - uses: actions-ecosystem/action-regex-match@v2
+        id: match-filename
+        with:
+          text: ${{ github.event.issue.body }}
+          regex: '\(.*\/(.*?\.zip)\)'
+
+      - uses: actions-ecosystem/action-regex-match@v2
+        id: match-theme-name
+        with:
+          text: ${{ github.event.issue.body }}
+          regex: '\(.*\/(.*?)\.zip\)'
+        
+      - name: Download Zip
+        if: ${{ steps.match-url.outputs.group1 }}
         run: |
-          echo '${{ steps.match-zip.outputs.group1 }}'
+          wget ${{ steps.match-url.outputs.group1 }}
+
+      - name: Unzip Theme
+        uses: montudor/action-zip@v1
+        with:
+          args:
+            unzip -qq ./${{ steps.match-filename.outputs.group1 }} -d ./${{ steps.match-theme-name.outputs.group1 }}
