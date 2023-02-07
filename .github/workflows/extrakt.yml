@@ -20,6 +20,6 @@ jobs:
       - name: Do Stuff
         if: ${{ steps.regex-match.outputs.group1 }}
         env:
-          zipfile: ${{ steps.regex-match.outputs.group1'.zip' }}
+          zipfile: format('{filename}.zip', steps.regex-match.outputs.group1) 
         run: |
           echo '${{ zipfile }}'
