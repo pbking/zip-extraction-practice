@@ -40,6 +40,7 @@ jobs:
           git checkout -B add/${{ steps.match-theme-name.outputs.group1 }}
           git config user.name github-actions
           git config user.email github-actions@github.com
+          git config pull.rebase false 
           git pull origin add/${{ steps.match-theme-name.outputs.group1 }}
 
       - name: Download Zip
