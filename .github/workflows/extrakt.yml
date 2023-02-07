@@ -18,5 +18,8 @@ jobs:
           regex: '\((.*?)\.zip\)'
 
       - name: Do Stuff
+        if: ${{ steps.regex-match.outputs.group1 }}
+        env:
+          zipfile: ${{ steps.regex-match.outputs.group1'.zip' }}
         run: |
-          echo '${{ steps.regex-match.outputs.group1 }}'
+          echo '${{ zipfile }}'
