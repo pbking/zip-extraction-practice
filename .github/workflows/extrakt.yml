@@ -17,9 +17,15 @@ jobs:
           text: ${{ github.event.issue.body }}
           regex: '\((.*?)\.zip\)'
         env:
-          file: ${{ steps.regex-match.outputs.group1 }}
+          file: ${{ steps.match-zip.outputs.group1 }}
+          fileshort: ${{ outputs.group1 }}
 
       - name: Do Stuff
         if: ${{ steps.match-zip.file }}
         run: |
           echo '${{ steps.match-zip.file }}'
+
+      - name: Do Stuff another way
+        if: ${{ steps.match-zip.fileshort }}
+        run: |
+          echo '${{ steps.match-zip.fileshort }}'
