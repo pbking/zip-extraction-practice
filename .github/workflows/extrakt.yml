@@ -59,7 +59,7 @@ jobs:
           git config user.name github-actions
           git config user.email github-actions@github.com
           git config --global --add --bool push.autoSetupRemote true
-          git config pull.ff only
+          git config pull.rebase true
           git pull origin add/${{ steps.match-theme-name.outputs.group1 }}
           git add --all
           git commit -m "Adding Theme: [${{ steps.match-theme-name.outputs.group1 }}]"
