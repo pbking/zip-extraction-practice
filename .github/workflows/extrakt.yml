@@ -38,6 +38,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git checkout -B add/${{ steps.match-theme-name.outputs.group1 }}
+          git config user.name github-actions
+          git config user.email github-actions@github.com
           git config pull.rebase true
           git pull origin add/${{ steps.match-theme-name.outputs.group1 }}
 
@@ -58,8 +60,6 @@ jobs:
         run: |
           sudo chown -R $USER:$USER .
           sudo rm ./${{ steps.match-filename.outputs.group1 }}
-          git config user.name github-actions
-          git config user.email github-actions@github.com
           git config --global --add --bool push.autoSetupRemote true
           git add --all
           git commit -m "Adding Theme: [${{ steps.match-theme-name.outputs.group1 }}]"
