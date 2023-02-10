@@ -41,7 +41,6 @@ jobs:
           regex: '\(.*\/(.*?)\.zip\)'
 
       - run: |
-        if: ${{ !github.event.comment.body }}
           echo "ZIP_URL=${{ steps.match-url.outputs.group1 }}" >> $GITHUB_ENV
           echo "ZIP_FILENAME=${{ steps.match-filename.outputs.group1 }}" >> $GITHUB_ENV
           echo "THEME_NAME=${{ steps.match-theme-name.outputs.group1 }}" >> $GITHUB_ENV
