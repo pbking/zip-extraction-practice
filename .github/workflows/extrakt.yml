@@ -82,6 +82,7 @@ jobs:
           echo "ZIP_URL=${{ steps.match-url-comment.outputs.group1 }}" >> $GITHUB_ENV
           echo "ZIP_FILENAME=${{ steps.match-filename-comment.outputs.group1 }}" >> $GITHUB_ENV
           echo "THEME_NAME=${{ steps.match-theme-name-comment.outputs.group1 }}" >> $GITHUB_ENV
+          echo "BRANCH_NAME=auto/${{ env.THEME_NAME }}" >> $GITHUB_ENV
 
       - name: Show Results
         if: ${{ env.ZIP_URL }}
@@ -89,3 +90,18 @@ jobs:
           echo $ZIP_URL
           echo $ZIP_FILENAME
           echo $THEME_NAME
+
+      # All the rest of these actions will only run if there's a $ZIP_URL defined (otherwise the content doesn't fit our criteria)
+
+      - uses: actions/checkout@v3
+        if: ${{ env.ZIP_URL }}
+        with:
+          fetch-depth: 0
+
+      - name: Checkout/Create Branch & Download Zip
+        if: ${{ env.ZIP_URL }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git checkout $BRANCH_NAME || git checkout -b $BRANCH_NAME
+          wget $ZIP_FILENAME
