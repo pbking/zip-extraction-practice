@@ -106,5 +106,19 @@ jobs:
           git config user.email github-actions@github.com
           git config --global --add --bool push.autoSetupRemote true
           git add --all
-          git commit -m "Automating Theme Change: [$THEME_NAME]"
+          git commit -m "Automated Theme Change: [$THEME_NAME]"
           git push origin $BRANCH_NAME
+
+      - name: Create Pull Request
+        uses: repo-sync/pull-request@v2
+        with:
+          destination_branch: "trunk"
+          source_branch: "{{ env.BRANCH_NAME }}" 
+          pr_title: "Automated Theme Change: [$THEME_NAME]" 
+          pr_body: |
+            **Automated Theme Change for: [$THEME_NAME]**
+
+            Closes: #${{ github.event.issue.number }}
+
+            _This Pull Request was automatticaly generated based on a .zip file uploaded on the associated issue._
+          pr_reviewer: "pbking"
