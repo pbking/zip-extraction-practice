@@ -23,28 +23,61 @@ jobs:
 
       # Only do these if the target is the ISSUE not a COMMENT on the issue
       - uses: actions-ecosystem/action-regex-match@v2
+        if: ${{ !github.event.comment.body }}
         id: match-url
         with:
           text: ${{ github.event.issue.body }}
           regex: '\((.*?\.zip)\)'
       
       - uses: actions-ecosystem/action-regex-match@v2
+        if: ${{ !github.event.comment.body }}
         id: match-filename
         with:
           text: ${{ github.event.issue.body }}
           regex: '\(.*\/(.*?\.zip)\)'
 
       - uses: actions-ecosystem/action-regex-match@v2
+        if: ${{ !github.event.comment.body }}
         id: match-theme-name
         with:
           text: ${{ github.event.issue.body }}
           regex: '\(.*\/(.*?)\.zip\)'
 
-      - if: ${{ !github.event.comment.body }}
+      - name: Define Variables (body)
+        if: ${{ !github.event.comment.body }}
         run: |
           echo "ZIP_URL=${{ steps.match-url.outputs.group1 }}" >> $GITHUB_ENV
           echo "ZIP_FILENAME=${{ steps.match-filename.outputs.group1 }}" >> $GITHUB_ENV
           echo "THEME_NAME=${{ steps.match-theme-name.outputs.group1 }}" >> $GITHUB_ENV
+
+      # Only do these if the target is a COMMENT on the issue
+      - uses: actions-ecosystem/action-regex-match@v2
+        if: ${{ github.event.comment.body }}
+        id: match-url-comment
+        with:
+          text: ${{ github.event.comment.body }}
+          regex: '\((.*?\.zip)\)'
+      
+      - uses: actions-ecosystem/action-regex-match@v2
+        if: ${{ github.event.comment.body }}
+        id: match-filename-comment
+        with:
+          text: ${{ github.event.comment.body }}
+          regex: '\(.*\/(.*?\.zip)\)'
+
+      - uses: actions-ecosystem/action-regex-match@v2
+        if: ${{ github.event.comment.body }}
+        id: match-theme-name-comment
+        with:
+          text: ${{ github.event.comment.body }}
+          regex: '\(.*\/(.*?)\.zip\)'
+
+      - name: Define Variables (body)
+        if: ${{ github.event.comment.body }}
+        run: |
+          echo "ZIP_URL=${{ steps.match-url-comment.outputs.group1 }}" >> $GITHUB_ENV
+          echo "ZIP_FILENAME=${{ steps.match-filename-comment.outputs.group1 }}" >> $GITHUB_ENV
+          echo "THEME_NAME=${{ steps.match-theme-name-comment.outputs.group1 }}" >> $GITHUB_ENV
 
       - name: Show Results
         run: |
