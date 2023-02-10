@@ -26,4 +26,4 @@ jobs:
 
       - name: Show Results
         run: |
-          echo '${{ ZIP_URL }}'
+          echo '$ZIP_URL'
