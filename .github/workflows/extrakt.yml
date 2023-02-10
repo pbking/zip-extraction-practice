@@ -23,7 +23,6 @@ jobs:
 
       # Only do these if the target is the ISSUE not a COMMENT on the issue
       - uses: actions-ecosystem/action-regex-match@v2
-        if: ${{ !github.event.comment.body }}
         id: match-url
         with:
           text: ${{ github.event.issue.body }}
@@ -54,3 +53,4 @@ jobs:
           echo $ZIP_URL
           echo $ZIP_FILENAME
           echo $THEME_NAME
+          echo "${{ toJson(github) }}"
