@@ -38,9 +38,9 @@ jobs:
           text: ${{ github.event.issue.body }}
           regex: '\(.*\/(.*?\.zip)\)'
 
+      # We do this one ALWAYS so we can compair the issue zip name to the comment zip name
       - name: Extract Theme Name (body)
         uses: actions-ecosystem/action-regex-match@v2
-        if: ${{ !github.event.comment.body }}
         id: match-theme-name
         with:
           text: ${{ github.event.issue.body }}
@@ -78,8 +78,9 @@ jobs:
           text: ${{ github.event.comment.body }}
           regex: '\(.*\/(.*?)\.zip\)'
 
+      # We only do this one if the BODY name matches the COMMENT name
       - name: Define Variables (comment)
-        if: ${{ github.event.comment.body }}
+        if: ${{ github.event.comment.body }} && ${{ steps.match-theme-name.outputs.group1 }} == ${{ steps.match-theme-name-comment.outputs.group1 }}
         run: |
           echo "ZIP_URL=${{ steps.match-url-comment.outputs.group1 }}" >> $GITHUB_ENV
           echo "ZIP_FILENAME=${{ steps.match-filename-comment.outputs.group1 }}" >> $GITHUB_ENV
