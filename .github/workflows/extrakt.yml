@@ -8,6 +8,15 @@ on:
     type: [ "created", "edited" ]
 
 jobs:
+
+ dump:
+  runs-on: ubuntu-latest
+  steps:
+  - name: $github
+    run:   echo "$GITHUB_CONTEXT"
+    env:
+     GITHUB_CONTEXT: ${{ toJson(github) }}
+
   extrakt:
 
     # We don't do anything on pull requests, which are also considered issues
@@ -20,15 +29,36 @@ jobs:
 
     steps:
 
+      # Only do these if the target is the ISSUE not a COMMENT on the issue
       - uses: actions-ecosystem/action-regex-match@v2
+        if: ${{ !github.event.comment.body }}
         id: match-url
         with:
           text: ${{ github.event.issue.body }}
           regex: '\((.*?\.zip)\)'
       
+      - uses: actions-ecosystem/action-regex-match@v2
+        if: ${{ !github.event.comment.body }}
+        id: match-filename
+        with:
+          text: ${{ github.event.issue.body }}
+          regex: '\(.*\/(.*?\.zip)\)'
+
+      - uses: actions-ecosystem/action-regex-match@v2
+        if: ${{ !github.event.comment.body }}
+        id: match-theme-name
+        with:
+          text: ${{ github.event.issue.body }}
+          regex: '\(.*\/(.*?)\.zip\)'
+
       - run: |
+        if: ${{ !github.event.comment.body }}
           echo "ZIP_URL=${{ steps.match-url.outputs.group1 }}" >> $GITHUB_ENV
+          echo "ZIP_FILENAME=${{ steps.match-filename.outputs.group1 }}" >> $GITHUB_ENV
+          echo "THEME_NAME=${{ steps.match-theme-name.outputs.group1 }}" >> $GITHUB_ENV
 
       - name: Show Results
         run: |
           echo $ZIP_URL
+          echo $ZIP_FILENAME
+          echo $THEME_NAME
