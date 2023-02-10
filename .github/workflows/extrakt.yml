@@ -22,13 +22,15 @@ jobs:
     steps:
 
       # Only do these if the target is the ISSUE not a COMMENT on the issue
-      - uses: actions-ecosystem/action-regex-match@v2
+      - name: Extract Zip URL (body)
+        uses: actions-ecosystem/action-regex-match@v2
         if: ${{ !github.event.comment.body }}
         id: match-url
         with:
           text: ${{ github.event.issue.body }}
           regex: '\((.*?\.zip)\)'
       
+      - name: Extract Zip Filename (body)
       - uses: actions-ecosystem/action-regex-match@v2
         if: ${{ !github.event.comment.body }}
         id: match-filename
@@ -36,6 +38,7 @@ jobs:
           text: ${{ github.event.issue.body }}
           regex: '\(.*\/(.*?\.zip)\)'
 
+      - name: Extract Theme Name (body)
       - uses: actions-ecosystem/action-regex-match@v2
         if: ${{ !github.event.comment.body }}
         id: match-theme-name
@@ -51,28 +54,31 @@ jobs:
           echo "THEME_NAME=${{ steps.match-theme-name.outputs.group1 }}" >> $GITHUB_ENV
 
       # Only do these if the target is a COMMENT on the issue
-      - uses: actions-ecosystem/action-regex-match@v2
+      - name: Extract Zip URL (comment)
+        uses: actions-ecosystem/action-regex-match@v2
         if: ${{ github.event.comment.body }}
         id: match-url-comment
         with:
           text: ${{ github.event.comment.body }}
           regex: '\((.*?\.zip)\)'
       
-      - uses: actions-ecosystem/action-regex-match@v2
+      - name: Extract Zip Filename (comment)
+        uses: actions-ecosystem/action-regex-match@v2
         if: ${{ github.event.comment.body }}
         id: match-filename-comment
         with:
           text: ${{ github.event.comment.body }}
           regex: '\(.*\/(.*?\.zip)\)'
 
-      - uses: actions-ecosystem/action-regex-match@v2
+      - name: Extract Theme Name (comment)
+        uses: actions-ecosystem/action-regex-match@v2
         if: ${{ github.event.comment.body }}
         id: match-theme-name-comment
         with:
           text: ${{ github.event.comment.body }}
           regex: '\(.*\/(.*?)\.zip\)'
 
-      - name: Define Variables (body)
+      - name: Define Variables (comment)
         if: ${{ github.event.comment.body }}
         run: |
           echo "ZIP_URL=${{ steps.match-url-comment.outputs.group1 }}" >> $GITHUB_ENV
