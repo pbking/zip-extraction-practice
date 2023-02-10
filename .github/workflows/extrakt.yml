@@ -106,10 +106,13 @@ jobs:
           git config user.email github-actions@github.com
           git config --global --add --bool push.autoSetupRemote true
           git add --all
-          git commit -m "Automated Theme Change: [$THEME_NAME]"
-          git push origin $BRANCH_NAME
+          if git status | grep -q modified; then export CHANGES=true; fi
+          if $CHANGES; then git commit -m "Automated Theme Change: [$THEME_NAME]"; fi
+          if $CHANGES; then git push origin $BRANCH_NAME; fi
+          echo "CHANGES=$CHANGES" >> $GITHUB_ENV
 
       - name: Create Pull Request
+        if: ${{ env.CHANGES }}
         uses: repo-sync/pull-request@v2
         with:
           destination_branch: "trunk"
