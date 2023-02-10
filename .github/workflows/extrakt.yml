@@ -13,7 +13,11 @@ jobs:
     # We don't do anything on pull requests, which are also considered issues
     if: ${{ !github.event.issue.pull_request }}
 
+    env:
+      ZIP_URL: unchanged
+
     runs-on: ubuntu-latest
+
     steps:
 
       - uses: actions-ecosystem/action-regex-match@v2
@@ -23,7 +27,7 @@ jobs:
           regex: '\((.*?\.zip)\)'
       
       - run: |
-          echo "::set-env name=ZIP_URL::${{ steps.match-url.outputs.group1 }}"
+          echo "{ZIP_URL}={${{ steps.match-url.outputs.group1 }}}" >> $GITHUB_ENV
 
       - name: Show Results
         run: |
