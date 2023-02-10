@@ -114,9 +114,9 @@ jobs:
         with:
           destination_branch: "trunk"
           source_branch: "${{ env.BRANCH_NAME }}" 
-          pr_title: "Automated Theme Change: [$THEME_NAME]" 
+          pr_title: "Automated Theme Change: [${{ env.THEME_NAME }}]" 
           pr_body: |
-            **Automated Theme Change for: [$THEME_NAME]**
+            **Automated Theme Change for: [${{ env.THEME_NAME }}]**
 
             Closes: #${{ github.event.issue.number }}
 
