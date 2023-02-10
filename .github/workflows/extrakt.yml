@@ -107,9 +107,10 @@ jobs:
           git config --global --add --bool push.autoSetupRemote true
           git add --all
           if git status | grep -q modified; then export CHANGES=true; fi
-          if [ $CHANGES = true ]; then git commit -m "Automated Theme Change: [$THEME_NAME]"; fi
-          if [ $CHANGES = true ]; then git push origin $BRANCH_NAME; fi
+          if [ $CHANGES ]; then git commit -m "Automated Theme Change: [$THEME_NAME]"; fi
+          if [ $CHANGES ]; then git push origin $BRANCH_NAME; fi
           echo "CHANGES=$CHANGES" >> $GITHUB_ENV
+
 
       - name: Create Pull Request
         if: ${{ env.CHANGES }}
