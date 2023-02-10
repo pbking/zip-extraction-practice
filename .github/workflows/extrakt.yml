@@ -92,7 +92,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Checkout/Create Branch & Download Zip
+      - name: Download Zip & Push to Branch
         if: ${{ env.ZIP_URL }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -100,4 +100,11 @@ jobs:
           git checkout $BRANCH_NAME || git checkout -b $BRANCH_NAME
           wget $ZIP_URL
           unzip -o -qq ./$ZIP_FILENAME -d ./$THEME_NAME
-          ls -lR
+          sudo chown -R $USER:$USER .
+          sudo rm ./$ZIP_FILENAME
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git config --global --add --bool push.autoSetupRemote true
+          git add --all
+          git commit -m "Automating Theme Change: [$THEME_NAME]"
+          git push origin $BRANCH_NAME
