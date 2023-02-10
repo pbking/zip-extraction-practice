@@ -14,9 +14,6 @@ jobs:
     # We don't do anything on pull requests, which are also considered issues
     if: ${{ !github.event.issue.pull_request }}
 
-    env:
-      ZIP_URL: unchanged
-
     runs-on: ubuntu-latest
 
     steps:
@@ -87,6 +84,7 @@ jobs:
           echo "THEME_NAME=${{ steps.match-theme-name-comment.outputs.group1 }}" >> $GITHUB_ENV
 
       - name: Show Results
+        if: ${{ env.ZIP_URL }}
         run: |
           echo $ZIP_URL
           echo $ZIP_FILENAME
