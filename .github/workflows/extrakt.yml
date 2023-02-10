@@ -113,7 +113,7 @@ jobs:
         uses: repo-sync/pull-request@v2
         with:
           destination_branch: "trunk"
-          source_branch: "{{ env.BRANCH_NAME }}" 
+          source_branch: "${{ env.BRANCH_NAME }}" 
           pr_title: "Automated Theme Change: [$THEME_NAME]" 
           pr_body: |
             **Automated Theme Change for: [$THEME_NAME]**
