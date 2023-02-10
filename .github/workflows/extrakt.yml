@@ -49,6 +49,7 @@ jobs:
           echo "ZIP_URL=${{ steps.match-url.outputs.group1 }}" >> $GITHUB_ENV
           echo "ZIP_FILENAME=${{ steps.match-filename.outputs.group1 }}" >> $GITHUB_ENV
           echo "THEME_NAME=${{ steps.match-theme-name.outputs.group1 }}" >> $GITHUB_ENV
+          echo "BRANCH_NAME=auto/${{ steps.match-theme-name.outputs.group1 }}" >> $GITHUB_ENV
 
       # Only do these if the target is a COMMENT on the issue
       - name: Extract Zip URL (comment)
@@ -82,13 +83,7 @@ jobs:
           echo "ZIP_URL=${{ steps.match-url-comment.outputs.group1 }}" >> $GITHUB_ENV
           echo "ZIP_FILENAME=${{ steps.match-filename-comment.outputs.group1 }}" >> $GITHUB_ENV
           echo "THEME_NAME=${{ steps.match-theme-name-comment.outputs.group1 }}" >> $GITHUB_ENV
-
-      - name: Show Results
-        if: ${{ env.ZIP_URL }}
-        run: |
-          echo $ZIP_URL
-          echo $ZIP_FILENAME
-          echo $THEME_NAME
+          echo "BRANCH_NAME=auto/${{ steps.match-theme-name-comment.outputs.group1 }}" >> $GITHUB_ENV
 
       # All the rest of these actions will only run if there's a $ZIP_URL defined (otherwise the content doesn't fit our criteria)
 
@@ -102,6 +97,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "BRANCH_NAME=auto/${{ env.THEME_NAME }}" >> $GITHUB_ENV
           git checkout $BRANCH_NAME || git checkout -b $BRANCH_NAME
-          wget $ZIP_FILENAME
+          wget $ZIP_URL
