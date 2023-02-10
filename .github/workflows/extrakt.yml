@@ -2,12 +2,17 @@ name: Extrakt a Theme
 
 on:
   issues:
-    types: [ "opened", "tagged", "edited" ]
+    types: [ "opened", "edited" ]
 
-  workflow_dispatch:
-  
+  issue_comment:
+    type: [ "created", "edited" ]
+
 jobs:
   extrakt:
+
+    # We don't do anything on pull requests, which are also considered issues
+    if: ${{ !github.event.issue.pull_request }}
+
     runs-on: ubuntu-latest
     steps:
 
@@ -16,64 +21,9 @@ jobs:
         with:
           text: ${{ github.event.issue.body }}
           regex: '\((.*?\.zip)\)'
-
-      - uses: actions-ecosystem/action-regex-match@v2
-        id: match-filename
-        with:
-          text: ${{ github.event.issue.body }}
-          regex: '\(.*\/(.*?\.zip)\)'
-
-      - uses: actions-ecosystem/action-regex-match@v2
-        id: match-theme-name
-        with:
-          text: ${{ github.event.issue.body }}
-          regex: '\(.*\/(.*?)\.zip\)'
-        
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      - name: Checkout/Create Branch 
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ZIP_URL: ${{ steps.match-url.outputs.group1 }}
+
+      - name: Show Results
         run: |
-          git checkout add/${{ steps.match-theme-name.outputs.group1 }} || git checkout -b add/${{ steps.match-theme-name.outputs.group1 }}
-          ls -lR
-
-      - name: Download Zip
-        if: ${{ steps.match-url.outputs.group1 }}
-        run: |
-          wget ${{ steps.match-url.outputs.group1 }}
-
-      - name: Unzip Theme
-        uses: montudor/action-zip@v1
-        with:
-          args:
-            unzip -o -qq ./${{ steps.match-filename.outputs.group1 }} -d ./${{ steps.match-theme-name.outputs.group1 }}
-
-      - name: Create Branch 
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          sudo chown -R $USER:$USER .
-          sudo rm ./${{ steps.match-filename.outputs.group1 }}
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git config --global --add --bool push.autoSetupRemote true
-          git add --all
-          git commit -m "Adding Theme: [${{ steps.match-theme-name.outputs.group1 }}]"
-          git push origin add/${{ steps.match-theme-name.outputs.group1 }}
-
-      - name: Create Pull Request
-        uses: repo-sync/pull-request@v2
-        with:
-          destination_branch: "trunk"
-          source_branch: "add/${{ steps.match-theme-name.outputs.group1 }}" 
-          pr_title: "Adding Theme: ${{ steps.match-theme-name.outputs.group1 }}" 
-          pr_body: |
-            *Adding Theme ${{ steps.match-theme-name.outputs.group1 }}*
-
-            Closes: #${{ github.event.issue.number }}
-
-            _Created auto-magically_
-          pr_reviewer: "pbking"
+          echo '${{ ZIP_URL }}'
