@@ -80,7 +80,7 @@ jobs:
 
       # We only do this one if the BODY name matches the COMMENT name
       - name: Define Variables (comment)
-        if: ${{ github.event.comment.body }} && ${{ steps.match-theme-name.outputs.group1 }} == ${{ steps.match-theme-name-comment.outputs.group1 }}
+        if: ${{ github.event.comment.body && steps.match-theme-name.outputs.group1 == steps.match-theme-name-comment.outputs.group1 }}
         run: |
           echo "ZIP_URL=${{ steps.match-url-comment.outputs.group1 }}" >> $GITHUB_ENV
           echo "ZIP_FILENAME=${{ steps.match-filename-comment.outputs.group1 }}" >> $GITHUB_ENV
