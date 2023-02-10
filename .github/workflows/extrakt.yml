@@ -27,7 +27,7 @@ jobs:
           regex: '\((.*?\.zip)\)'
       
       - run: |
-          echo "{ZIP_URL}={${{ steps.match-url.outputs.group1 }}}" >> $GITHUB_ENV
+          echo "ZIP_URL=${{ steps.match-url.outputs.group1 }}" >> $GITHUB_ENV
 
       - name: Show Results
         run: |
