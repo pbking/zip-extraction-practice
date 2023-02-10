@@ -82,7 +82,6 @@ jobs:
           echo "ZIP_URL=${{ steps.match-url-comment.outputs.group1 }}" >> $GITHUB_ENV
           echo "ZIP_FILENAME=${{ steps.match-filename-comment.outputs.group1 }}" >> $GITHUB_ENV
           echo "THEME_NAME=${{ steps.match-theme-name-comment.outputs.group1 }}" >> $GITHUB_ENV
-          echo "BRANCH_NAME=auto/${{ env.THEME_NAME }}" >> $GITHUB_ENV
 
       - name: Show Results
         if: ${{ env.ZIP_URL }}
@@ -103,5 +102,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          echo "BRANCH_NAME=auto/${{ env.THEME_NAME }}" >> $GITHUB_ENV
           git checkout $BRANCH_NAME || git checkout -b $BRANCH_NAME
           wget $ZIP_FILENAME
