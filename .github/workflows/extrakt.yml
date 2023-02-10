@@ -99,3 +99,4 @@ jobs:
         run: |
           git checkout $BRANCH_NAME || git checkout -b $BRANCH_NAME
           wget $ZIP_URL
+          unzip -o -qq ./$ZIP_FILENAME -d ./$THEME_NAME
