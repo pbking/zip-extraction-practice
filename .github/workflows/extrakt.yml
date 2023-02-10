@@ -31,7 +31,7 @@ jobs:
           regex: '\((.*?\.zip)\)'
       
       - name: Extract Zip Filename (body)
-      - uses: actions-ecosystem/action-regex-match@v2
+        uses: actions-ecosystem/action-regex-match@v2
         if: ${{ !github.event.comment.body }}
         id: match-filename
         with:
@@ -39,7 +39,7 @@ jobs:
           regex: '\(.*\/(.*?\.zip)\)'
 
       - name: Extract Theme Name (body)
-      - uses: actions-ecosystem/action-regex-match@v2
+        uses: actions-ecosystem/action-regex-match@v2
         if: ${{ !github.event.comment.body }}
         id: match-theme-name
         with:
