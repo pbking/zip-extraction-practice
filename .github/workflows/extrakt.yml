@@ -21,9 +21,9 @@ jobs:
         with:
           text: ${{ github.event.issue.body }}
           regex: '\((.*?\.zip)\)'
-        env:
-          ZIP_URL: ${{ steps.match-url.outputs.group1 }}
+        run: |
+          echo "::set-env name=ZIP_URL::${{ steps.match-url.outputs.group1 }}"
 
       - name: Show Results
         run: |
-          echo '$ZIP_URL'
+          echo $ZIP_URL
