@@ -10,8 +10,6 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 A theme for travelers, writers and photographers.
 
-Testing adding a change to a comment.
-
 == Changelog ==
 
 = 0.0.1 =
