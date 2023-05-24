@@ -81,7 +81,7 @@ jobs:
           unzip -o -qq ./$ZIP_FILENAME -d ./temp_unzip_folder
           echo "THEME_NAME=$(grep 'Name:' ./temp_unzip_folder/style.css | cut -d ':' -f2 | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//' | tr '[:upper:]' '[:lower:]' | tr ' ' '-')" >> $GITHUB_ENV
           echo "BRANCH_NAME=auto/[$THEME_NAME]" >> $GITHUB_ENV
-          sudo mv ./temp_unzip_folder
+          sudo mv ./temp_unzip_folder ./$THEME_NAME
           sudo chown -R $USER:$USER .
           sudo rm ./$ZIP_FILENAME
           git checkout $BRANCH_NAME || git checkout -b $BRANCH_NAME
